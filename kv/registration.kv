@@ -1,0 +1,158 @@
+<RegistrationScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [40, 60, 40, 40]  # [left, top, right, bottom]
+        spacing: 20
+
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1  # Default color in case image doesn't load
+            Rectangle:
+                source: 'assets/fitnessbg.jpg'  # Path to your image
+                pos: self.pos
+                size: self.size
+            Color:
+                rgba: 0, 0, 0, 0.6  # Very light transparent white overlay
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 0.6, 0.7
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            padding: [20, 30, 20, 30]
+            spacing: 15
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 0.85
+                RoundedRectangle:
+                    pos: self.x + 10, self.y + 10
+                    size: self.width - 20, self.height - 20
+                    radius: [20, 20, 20, 20]
+
+            Label:
+                text: 'Register'
+                font_size: '32sp'
+                bold: True
+                color: 1, 1, 1, 1
+                size_hint_y: None
+                height: '50dp'
+
+            Label:
+                text: 'Create your account'
+                font_size: '16sp'
+                color: 0.7, 0.7, 0.7, 1
+                size_hint_y: None
+                height: '30dp'
+
+            GridLayout:
+                cols: 2
+                row_force_default: True
+                row_default_height: 50
+                spacing: [10, 10]
+                size_hint: None, None
+                size: 560, 350
+                pos_hint: {"center_x": 0.5}
+
+                TextInput:
+                    id: first_name
+                    hint_text: 'First Name'
+                    multiline: False
+                    font_size: '16sp'
+                    foreground_color: 0, 0, 0, 1
+                    cursor_color: 1, 1, 1, 1
+
+                TextInput:
+                    id: last_name
+                    hint_text: 'Last Name'
+                    multiline: False
+                    font_size: '16sp'
+                    foreground_color: 0, 0, 0, 1
+                    cursor_color: 1, 1, 1, 1
+
+                TextInput:
+                    id: email
+                    hint_text: 'Email'
+                    multiline: False
+                    font_size: '16sp'
+                    foreground_color: 0, 0, 0, 1
+                    cursor_color: 1, 1, 1, 1
+
+                TextInput:
+                    id: mobile
+                    hint_text: 'Mobile'
+                    multiline: False
+                    font_size: '16sp'
+                    foreground_color: 0, 0, 0, 1
+                    cursor_color: 1, 1, 1, 1
+
+                TextInput:
+                    id: date_of_birth
+                    hint_text: 'Date of Birth (DD/MM/YYYY)'
+                    multiline: False
+                    font_size: '16sp'
+                    foreground_color: 0, 0, 0, 1
+                    cursor_color: 1, 1, 1, 1
+
+                TextInput:
+                    id: height
+                    hint_text: 'Height (cm)'
+                    multiline: False
+                    font_size: '16sp'
+                    foreground_color: 0, 0, 0, 1
+                    cursor_color: 1, 1, 1, 1
+
+                TextInput:
+                    id: weight
+                    hint_text: 'Weight (kg)'
+                    multiline: False
+                    font_size: '16sp'
+                    foreground_color: 0, 0, 0, 1
+                    cursor_color: 1, 1, 1, 1
+
+                Spinner:
+                    id: gender
+                    text: 'Gender'
+                    values: ['Male', 'Female', 'Other']
+                    color: 1, 1, 1, 1
+
+                TextInput:
+                    id: password
+                    hint_text: 'Password'
+                    multiline: False
+                    password: True
+                    font_size: '16sp'
+                    foreground_color: 0, 0, 0, 1
+                    cursor_color: 1, 1, 1, 1
+
+                TextInput:
+                    id: confirm_password
+                    hint_text: 'Confirm Password'
+                    multiline: False
+                    password: True
+                    font_size: '16sp'
+                    foreground_color: 0, 0, 0, 1
+                    cursor_color: 1, 1, 1, 1
+
+            Button:
+                text: 'Register'
+                font_size: '18sp'
+                bold: True
+                background_normal: ''
+                background_color: 0.8, 0, 0, 1
+                color: 1, 1, 1, 1
+                size_hint: None, None
+                size: 280, 50
+                pos_hint: {"center_x": 0.5}
+                on_press: root.register_user()
+
+            Label:
+                markup: True
+                text: 'Already have an account? [ref=login]Login here[/ref].'
+                font_size: '14sp'
+                color: 0.7, 0.7, 0.7, 1
+                size_hint_y: None
+                height: '30dp'
+                pos_hint: {"center_x": 0.5}
+                on_ref_press: root.login()

@@ -1,0 +1,98 @@
+<AdminDashboardScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        # Title and Caption
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: 0.2
+
+            Label:
+                text: "StreamSmart"
+                font_size: 48
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+                size_hint_y: 0.6
+
+            Label:
+                text: "Admin Dashboard"
+                font_size: 20
+                halign: 'center'
+                valign: 'middle'
+                size_hint_y: 0.4
+
+        # Navigation Bar
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.1
+            spacing: 20
+            padding: 10
+
+            Button:
+                text: "Home"
+                on_press: print("Home clicked")  # Add logic for navigation
+
+            Button:
+                text: "Manage Users"
+                on_press: print("Manage Users clicked")  # Add logic for managing users
+
+            Button:
+                text: "View Subscriptions"
+                on_press: print("View Subscriptions clicked")  # Add logic for viewing subscriptions
+
+            Button:
+                text: "Reports"
+                on_press: print("Reports clicked")  # Add logic for viewing reports
+
+        # Subscription Options with Image Buttons in a Grid
+        ScrollView:
+            size_hint_y: 0.6
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 10
+                spacing: 10
+
+                # Using GridLayout for arranging images
+                GridLayout:
+                    cols: 2  # Two images per row
+                    padding: 10
+                    spacing: 20
+
+                    ImageButton:
+                        source: 'assets/netflix-logo.png'
+                        on_press: root.open_subscription('Netflix')
+                        size_hint: None, None
+                        size: dp(150), dp(150)
+
+                    ImageButton:
+                        source: 'assets/prime-logo.png'
+                        on_press: root.open_subscription('Amazon Prime')
+                        size_hint: None, None
+                        size: dp(150), dp(150)
+
+                    ImageButton:
+                        source: 'assets/hotstar-logo.png'
+                        on_press: root.open_subscription('Hotstar')
+                        size_hint: None, None
+                        size: dp(150), dp(150)
+
+                    ImageButton:
+                        source: 'assets/spotify-logo.png'
+                        on_press: root.open_subscription('Spotify')
+                        size_hint: None, None
+                        size: dp(150), dp(150)
+
+                    ImageButton:
+                        source: 'assets/youtube-logo.png'
+                        on_press: root.open_subscription('YouTube')
+                        size_hint: None, None
+                        size: dp(150), dp(150)
+
+        # Logout Button
+        Button:
+            text: "Logout"
+            size_hint_y: 0.1
+            on_press: root.logout()  # Calls the logout method in AdminDashboardScreen

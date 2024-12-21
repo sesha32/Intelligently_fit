@@ -1,0 +1,32 @@
+<ChatBotScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        ScrollView:
+            id: chat_history
+            size_hint: (1, 0.85)
+            BoxLayout:
+                id: chat_box
+                orientation: 'vertical'
+                size_hint_y: None
+                spacing: 10
+                padding: (10, 10)
+                height: self.minimum_height
+
+        BoxLayout:
+            size_hint_y: None
+            height: 60
+
+            TextInput:
+                id: user_input
+                hint_text: "Type your feedback here..."
+                multiline: False
+                size_hint_x: 0.8
+                disabled: True
+
+            Button:
+                text: "Send"
+                size_hint_x: 0.2
+                on_release: root.process_feedback(user_input.text)
