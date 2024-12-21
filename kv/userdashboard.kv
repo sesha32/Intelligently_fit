@@ -1,0 +1,49 @@
+# Colors for the User Dashboard
+<UserDashBoardScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.1, 0.1, 0.1, 1  # Dark background color
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Button:
+            text: "Go to Chatbot"
+            size_hint_y: None
+            height: 50
+            background_color: 0.2, 0.5, 1, 1  # Light blue for navigation
+            color: 1, 1, 1, 1  # White text
+
+        Label:
+            id: bmi_label
+            text: "Hello!"
+            color: 1, 1, 1, 1  # White text
+
+        Label:
+            id: bmi_value_label
+            text: "Your BMI: --"
+            color: 0.6, 1, 0.6, 1  # Light green text
+
+        Button:
+            text: "Get Fitness Suggestion"
+            background_color: 1, 0.3, 0.3, 1  # Light red for emphasis
+            color: 1, 1, 1, 1  # White text
+
+        ScrollView:
+            size_hint: (1, None)
+            height: 200
+            GridLayout:
+                id: result_grid
+                cols: 2
+                size_hint_y: None
+                height: self.minimum_height
+
+        Label:
+            id: score_label
+            text: "Your Score: 0"
+            color: 1, 1, 1, 1  # White text

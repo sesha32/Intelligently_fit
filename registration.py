@@ -12,19 +12,32 @@ Builder.load_file('kv/registration.kv')
 class RegistrationScreen(Screen):
 
     def register_user(self):
-        first_name = self.ids.first_name.text
-        last_name = self.ids.last_name.text
-        email = self.ids.email.text
-        mobile = self.ids.mobile.text
-        date_of_birth = self.ids.date_of_birth.text
-        height = self.ids.height.text  # Height as text
-        weight = self.ids.weight.text  # Weight as text
-        gender = self.ids.gender.text  # Gender as text
+        first_name = self.ids.first_name.text.strip()
+        last_name = self.ids.last_name.text.strip()
+        email = self.ids.email.text.strip()
+        mobile = self.ids.mobile.text.strip()
+        date_of_birth = self.ids.date_of_birth.text.strip()
+        height = self.ids.height.text.strip()
+        weight = self.ids.weight.text.strip()
+        gender = self.ids.gender.text.strip()
         password = self.ids.password.text
         confirm_password = self.ids.confirm_password.text
 
+        # Validate inputs
+        if not all([first_name, last_name, email, mobile, date_of_birth, height, weight, gender, password, confirm_password]):
+            print("All fields are required!")
+            return
+
         if password != confirm_password:
             print("Passwords do not match!")
+            return
+
+        # Validate height and weight as integers
+        try:
+            height = int(height)
+            weight = int(weight)
+        except ValueError:
+            print("Height and Weight must be valid integers!")
             return
 
         # Hash the password
@@ -33,25 +46,17 @@ class RegistrationScreen(Screen):
         # Generate OTP
         otp = random.randint(100000, 999999)
 
-        # Check if height and weight are valid integers
-        try:
-            height = int(height)
-            weight = int(weight)
-        except ValueError:
-            print("Height and Weight must be valid integers!")
-            return
-
         try:
             conn = sqlite3.connect("streamsmart.db")
             cursor = conn.cursor()
 
-            # Inserting the user data into the database
-            cursor.execute('''INSERT INTO users (first_name, last_name, email, mobile, date_of_birth, height, weight, gender, password)
-                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                           (first_name, last_name, email, mobile, date_of_birth, height, weight, gender, hashed_password))
+            # Insert the user data into the database
+            cursor.execute('''
+                INSERT INTO users (first_name, last_name, email, mobile, date_of_birth, height, weight, gender, password)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (first_name, last_name, email, mobile, date_of_birth, height, weight, gender, hashed_password))
 
             conn.commit()
-            conn.close()
 
             # Send OTP via email
             self.send_otp_email(email, otp)
@@ -59,7 +64,6 @@ class RegistrationScreen(Screen):
             print("User registered successfully and OTP sent!")
 
             # Set user session
-            # After successful registration, set user data into the session
             SessionManager.set_user({
                 'id': cursor.lastrowid,  # Assuming your database assigns this automatically
                 'first_name': first_name,
@@ -75,14 +79,19 @@ class RegistrationScreen(Screen):
             self.manager.current = 'login'
         except sqlite3.IntegrityError:
             print("This email is already registered!")
+        except Exception as e:
+            print(f"An error occurred during registration: {e}")
+        finally:
+            conn.close()
 
     def send_otp_email(self, email, otp):
+        """Send an OTP to the user's email."""
         sender_email = "youremail@gmail.com"
         sender_password = "yourpassword"
-        
+
         subject = "Your OTP Code"
         body = f"Your OTP code for registration is {otp}."
-        
+
         msg = MIMEText(body)
         msg["Subject"] = subject
         msg["From"] = sender_email
@@ -93,5 +102,9 @@ class RegistrationScreen(Screen):
                 server.login(sender_email, sender_password)
                 server.sendmail(sender_email, email, msg.as_string())
             print("OTP sent to email!")
-        except Exception as e:
+        except smtplib.SMTPException as e:
             print(f"Error sending email: {e}")
+
+    def switch_to_login(self):
+        """Switch to the login screen."""
+        self.manager.current = 'login'

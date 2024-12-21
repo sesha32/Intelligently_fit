@@ -12,7 +12,7 @@
                 pos: self.pos
                 size: self.size
             Color:
-                rgba: 0, 0, 0, 0.6  # Very light transparent white overlay
+                rgba: 0, 0, 0, 0.6  # Light transparent overlay
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -23,13 +23,6 @@
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
             padding: [20, 30, 20, 30]
             spacing: 15
-            canvas.before:
-                Color:
-                    rgba: 0, 0, 0, 0.85
-                RoundedRectangle:
-                    pos: self.x + 10, self.y + 10
-                    size: self.width - 20, self.height - 20
-                    radius: [20, 20, 20, 20]
 
             Label:
                 text: 'Register'
@@ -50,7 +43,7 @@
                 cols: 2
                 row_force_default: True
                 row_default_height: 50
-                spacing: [10, 10]
+                spacing: [20, 20]
                 size_hint: None, None
                 size: 560, 350
                 pos_hint: {"center_x": 0.5}
@@ -70,7 +63,7 @@
                     font_size: '16sp'
                     foreground_color: 0, 0, 0, 1
                     cursor_color: 1, 1, 1, 1
-
+                   
                 TextInput:
                     id: email
                     hint_text: 'Email'
@@ -155,4 +148,5 @@
                 size_hint_y: None
                 height: '30dp'
                 pos_hint: {"center_x": 0.5}
-                on_ref_press: root.login()
+                on_ref_press: root.switch_to_login()
+
